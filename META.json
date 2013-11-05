@@ -4,7 +4,7 @@
       "Menno Blom <blom@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.132830",
    "license" : [
       "perl_5"
    ],
@@ -48,5 +48,5 @@
          "url" : "https://github.com/b10m/p5-WWW-Sixpack"
       }
    },
-   "version" : "0.01"
+   "version" : "0.02"
 }

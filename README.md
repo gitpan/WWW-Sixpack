@@ -4,7 +4,7 @@ WWW::Sixpack - Perl client library for SeatGeek's Sixpack A/B testing framework 
 
 # VERSION
 
-Version 0.01
+Version 0.02
 
 # SYNOPSIS
 
@@ -13,7 +13,8 @@ Version 0.01
     my $sixpack = WWW::Sixpack->new();
 
     # Participate in a test (creates the test if necessary)
-    my $alternative = $sixpack->participate('new-test', [ 'alt-1', 'alt-2' ]);
+    my $alternative = $sixpack->participate('new-test', [ 'alt-1', 'alt-2' ],
+        { ip_address => $client_ip, user_agent => $client_ua });
 
     if( $alternative->{alternative}{name} eq 'alt-1' ) {
         # show data for variant alt-1
@@ -57,9 +58,21 @@ Arguments:
 
     At least two alternatives.
 
-- `force`
+- `options`
 
-    An alternative you wish to force too (optional).
+    An optional hashref with the following options:
+
+    - `force`
+
+        Force a specific alternative to be returned
+
+    - `user_agent`
+
+        User agent of the user making a request. Used for bot detection.
+
+    - `ip_address`
+
+        IP address of user making a request. Used for bot detection.
 
 ## convert
 

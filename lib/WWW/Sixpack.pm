@@ -18,11 +18,11 @@ WWW::Sixpack - Perl client library for SeatGeek's Sixpack A/B testing framework 
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -31,7 +31,8 @@ our $VERSION = '0.01';
     my $sixpack = WWW::Sixpack->new();
 
     # Participate in a test (creates the test if necessary)
-    my $alternative = $sixpack->participate('new-test', [ 'alt-1', 'alt-2' ]);
+    my $alternative = $sixpack->participate('new-test', [ 'alt-1', 'alt-2' ],
+        { ip_address => $client_ip, user_agent => $client_ua });
 
     if( $alternative->{alternative}{name} eq 'alt-1' ) {
         # show data for variant alt-1
@@ -95,32 +96,51 @@ The name of the experiment. This will generate a new experiment when the name is
 
 At least two alternatives.
 
+=item C<options>
+
+An optional hashref with the following options:
+
+=over 4
+
 =item C<force>
 
-An alternative you wish to force too (optional).
+Force a specific alternative to be returned
+
+=item C<user_agent>
+
+User agent of the user making a request. Used for bot detection.
+
+=item C<ip_address>
+
+IP address of user making a request. Used for bot detection.
+
+=back
 
 =back
 
 =cut
 
 sub participate {
-    my ($self, $experiment, $alternatives, $force) = @_;
+    my ($self, $experiment, $alternatives, $options) = @_;
 
     croak('Bad experiment name')
         if( $experiment !~ m/$VALID_NAME_RE/ );
     croak('Must specify at least 2 alternatives')
         if( !$alternatives || !ref $alternatives ||
             ref $alternatives ne 'ARRAY' || @$alternatives < 2 );
+
     for my $alt (@{$alternatives}) {
         croak('Bad alternative name: '.$alt) if( $alt !~ m/$VALID_NAME_RE/ );
     }
+
+    $options ||= { };
 
     my %params = (
         client_id    => $self->{client_id},
         experiment   => $experiment,
         alternatives => $alternatives,
+        %{$options}
     );
-    $params{force} = $force if $force;
 
     return $self->_get_response('/participate', \%params);
 }
@@ -179,7 +199,6 @@ sub _get_response {
        $uri->path($endpoint);
        $uri->query_form( $params );
 
-    print "XX: $uri\n";
     my $resp = $self->{ua}->get( $uri );
     my $json = ( $resp->is_success )
              ? $resp->content

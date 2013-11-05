@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 0
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.130880'
+generated_by: 'ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.132830'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -27,4 +27,4 @@ requires:
   perl: 5.006
 resources:
   repository: https://github.com/b10m/p5-WWW-Sixpack
-version: 0.01
+version: 0.02
