@@ -18,11 +18,11 @@ WWW::Sixpack - Perl client library for SeatGeek's Sixpack A/B testing framework 
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -142,7 +142,11 @@ sub participate {
         %{$options}
     );
 
-    return $self->_get_response('/participate', \%params);
+    my $res = $self->_get_response('/participate', \%params);
+       $res->{alternative}{name} = $alternatives->[0]
+           if( $res->{status} eq 'failed' );
+
+    return $res;
 }
 
 =head2 convert

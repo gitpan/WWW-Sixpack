@@ -4,7 +4,7 @@ WWW::Sixpack - Perl client library for SeatGeek's Sixpack A/B testing framework 
 
 # VERSION
 
-Version 0.02
+Version 0.03
 
 # SYNOPSIS
 

@@ -1,7 +1,11 @@
 Revision history for WWW-Sixpack
 
+0.03    2013-11-05
+        Making sure the participate function always returns an alernative,
+        even on failure.
+
 0.02    2013-11-05
-        Added the ip_address and user_agent options
+        Added the ip_address and user_agent options.
 
 0.01    2013-11-03
         First version, released on an unsuspecting world.
